@@ -1,0 +1,2 @@
+bool gate
+bool dice
