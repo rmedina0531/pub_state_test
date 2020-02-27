@@ -52,6 +52,7 @@ add_message_files(
     FILES
     Num.msg
     cv_data.msg
+    lights.msg
 )
 
 ## Generate services in the 'srv' folder

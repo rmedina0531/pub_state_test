@@ -6,6 +6,7 @@ import smach_ros
 from std_msgs.msg import Int32
 import time
 import threading
+from publishers.light_pub import Light_publisher
 
 from pub_state_test.msg import cv_data
 
@@ -20,6 +21,8 @@ class Search(smach.State):
         self.gate_found = False
         self.dice_found = False
 
+        self.light_pub = Light_publisher()
+
     def callback(self, data):
         self.mutex.acquire()
         self.gate_found = data.gate
@@ -31,6 +34,8 @@ class Search(smach.State):
         #    self.subscriber = rospy.Subscriber('cv_data', Int32, self.callback)
         #wait for a maximum of 30 seconds
         #rospy.loginfo(str(userdata))
+
+        self.light_pub.mode('search_state')
 
         #need to find a way to clear the queue after the flag has been tripped
         while True:
