@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-# from neopixel import *
-from led_strip import Led_Strip
-import time
+
+# from led_strip import Led_Strip
 import rospy
 from pub_state_test.msg import lights
 
@@ -19,6 +18,7 @@ class Sub_lights():
                       'search_state':self.ready_state, 'lights_off':self.lights_off}
 
     def callback(self, data):
+        rospy.loginfo(data.mode)
         if data.mode in self.modes:
             self.modes[mode]()
 

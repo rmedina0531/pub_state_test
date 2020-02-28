@@ -6,10 +6,10 @@ import smach
 import smach_ros
 #from subscriber_state_machine import WaitForTwo
 # define state Foo
-from execute_task_state import Execute_Task
-from search_state import Search
-from tracker_state import Tracker
-from approach_state_v2 import add_states
+from state_machine.execute_task_state import Execute_Task
+from state_machine.search_state import Search
+from state_machine.tracker_state import Tracker
+from state_machine.approach_state_v2 import add_states
 
 def main():
     rospy.init_node('sub_state_machine')
