@@ -4,22 +4,16 @@ import rospy
 import smach
 import smach_ros
 import time
-from utilities.comms import Subscriber
+from utilities.comms import Subscriber, Publisher
 
 class Search(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['found'])
         self.sub = Subscriber('cv_data', 'cv_data')
-        # self.sub = CV_subscriber()
+        self.pub = Publisher('light_data', 'light_data')
 
     def execute(self, userdata):
-        #if self.subscriber is None:
-        #    self.subscriber = rospy.Subscriber('cv_data', Int32, self.callback)
-        #wait for a maximum of 30 seconds
-        #rospy.loginfo(str(userdata))
-
-
-        #need to find a way to clear the queue after the flag has been tripped
+        self.pub.publish('search_state')
         while True:
             object_data = self.sub.get_data()
             out = 'Gate=' + str(object_data.gate) + ', ' + "Dice=" + str(object_data.dice)

@@ -5,13 +5,16 @@ import smach
 import smach_ros
 import time
 import threading
+from utilities.comms import Publisher
 
 
 class Step1(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['complete'])
+        self.pub = Publisher('light_data', 'light_data')
 
     def execute(self, userdata):
+        self.pub.publish('approach_state')
         count = 0
 
         while True:

@@ -59,7 +59,7 @@ class Led_Strip(threading.Thread):
         for i in range(self.led_strip.numPixels()):
             self.led_strip.setPixelColor(i, self.COLOR['off'])
         self.led_strip.show()
-        return self.wait_event(10000)
+        return self.wait_event(10)
 
     def set_mode(self, mode, color=Color(0,0,255)):
         print('setMode')
@@ -71,19 +71,19 @@ class Led_Strip(threading.Thread):
             self.mutex.release()
 
     def wait_event(self, time_seconds):
-        rate = 1
-        loops = int((1000/rate) * time_seconds)
+        rate = 1 #in millaseconds
+        loops = int((1000.0/rate) * time_seconds)
         for i in range(loops):
-            print(i)
+            # print(i)
+            # print(loops)
             self.mutex.acquire()
             change = self.change_pattern
             self.mutex.release()
             if change:
                 return True
-            print('before sleep')
+            # print('before sleep')
             time.sleep(rate/1000.0)
-            print('after sleep')
-
+            # print('after sleep')
         return False
 
 
@@ -91,7 +91,7 @@ class Led_Strip(threading.Thread):
         for i in range(self.led_strip.numPixels()):
             self.led_strip.setPixelColor(i, color)
         self.led_strip.show()
-        return self.wait_event(10000)
+        return self.wait_event(10)
 
     def blinking_light(self, color):
         for i in range(self.led_strip.numPixels()):
@@ -99,14 +99,14 @@ class Led_Strip(threading.Thread):
         # print('change color1')
         self.led_strip.show()
 
-        if self.wait_event(2):
+        if self.wait_event(.8):
             return True
 
         for i in range(self.led_strip.numPixels()):
             self.led_strip.setPixelColor(i, self.COLOR['off'])
         self.led_strip.show()
 
-        if self.wait_event(2):
+        if self.wait_event(.8):
             return True
 
         return False
@@ -116,7 +116,7 @@ class Led_Strip(threading.Thread):
         for i in range(self.led_strip.numPixels()):
             self.led_strip.setPixelColor(i, color)
             self.led_strip.show()
-            if self.wait_event(1000):
+            if self.wait_event(1):
                 return True
         return False
 
