@@ -1,8 +1,8 @@
 import rospy
-from pub_state_test.msg import cv_data
+from pub_state_test.msg import cv_data, lights
 import threading
 
-type_list = {'cv_data':cv_data}
+type_list = {'cv_data':cv_data, 'light_data':lights}
 
 class Subscriber():
     def __init__(self, topic, data_type):
@@ -25,8 +25,8 @@ class Subscriber():
 
 class Publisher():
     def __init__(self, topic, data_type):
-        self.pub = rospy.Publisher(topic, type_list[data_type], queue_size=1)
-        pub_type = {'cv_data': self.cv_data_pub}
+        self.pub = rospy.Publisher(topic, type_list[data_type], queue_size=1, anonymous=False)
+        pub_type = {'cv_data': self.cv_data_pub, 'lights_data':self.lights_pub}
         # self.data = pub_type[data_type]()
         self.publish = pub_type[data_type]
         self.data = type_list[data_type]()
@@ -35,3 +35,6 @@ class Publisher():
         self.data.gate = gate
         self.data.dice= dice
         self.pub.publish(self.data)
+
+    def lights_pub(self, mode='stand_by'):
+        self.data.mode = mode
