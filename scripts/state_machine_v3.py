@@ -4,6 +4,7 @@ import roslib
 import rospy
 import smach
 import smach_ros
+from utilities.comms import Publisher
 #from subscriber_state_machine import WaitForTwo
 # define state Foo
 from state_machine.execute_task_state import Execute_Task
@@ -13,7 +14,8 @@ from state_machine.approach_state_v2 import add_states
 
 def main():
     rospy.init_node('sub_state_machine')
-
+    publisher = Publisher('light_data', 'light_data')
+    publisher.publish('ready_state')
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=['completed'])
 
